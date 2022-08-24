@@ -1,0 +1,72 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-300">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/2 h-full" method="post" [formGroup]="blogForm" (ngSubmit)="patch()">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+          Title
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="title" id="title" [value]="blogForm.value.title" type="text" placeholder="Title">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="topic">
+            Topic
+        </label>
+        <div class="relative">
+        <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            formControlName="topic" id="topic" [(value)]="blogForm.value.topic">
+            <option>It</option>
+            <option>Life</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+          Description
+        </label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="description" id="description" type="text" [value]="blogForm.value.description" placeholder="Description"></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+          Image 
+        </label>
+        <input #imageInput class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="image" id="image" type="file" placeholder="Image" accept="image/*" (change)="processFile(imageInput)"/>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="body">
+          Body
+        </label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-52"
+            formControlName="body" id="body" type="text" [(value)]="blogForm.value.body" placeholder="Body"></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="published">
+            Published
+        </label>
+        <div class="relative">
+        <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            formControlName="published" id="published">
+            <option>true</option>
+            <option>false</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center justify-between mb-4">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">
+          Edit
+        </button>
+        <a [routerLink]="['/blog']" class="mt-4">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                Back
+              </button>
+        </a>
+      </div>
+    </form>
+  </div>
