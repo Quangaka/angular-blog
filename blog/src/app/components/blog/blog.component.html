@@ -136,12 +136,13 @@
                     <p class="text-3xl font-bold hover:text-gray-700 pb-4">{{blog.title}}</p>
                     <p class="text-sm pb-8">
                         By <span class="font-semibold hover:text-gray-800">{{account.username}}</span>, 
-                        Published on {{blog.publishedAt}}
+                        Published on {{blog.publishedAt | date: 'd/M/y'}}
                     </p>
                     <h1 class="text-2xl font-bold pb-3">Description</h1>
                     <p class="pb-3">{{blog.description}}</p>
                     <h1 class="text-2xl font-bold pb-3">Body</h1>
                     <p class="pb-3">{{blog.body}}</p>
+                    <p class="pb-3">Views: {{blog.views + 1}}</p>
                     </div>
             </article>
             <div class="flex flex-row mb-0 float-right ">

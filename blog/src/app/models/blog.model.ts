@@ -10,6 +10,7 @@ export class Blog {
         public createdAt: Date,
         public publishedAt: Date,
         public status: boolean,
+        public views: number,
     ) 
     {}
 }

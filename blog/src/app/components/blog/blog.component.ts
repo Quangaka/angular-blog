@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Blog } from 'src/app/models/blog.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Account } from 'src/app/models/account.model';
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlogComponent implements OnInit {
+export class BlogComponent implements OnInit, OnDestroy {
 
   public blog!: Blog;
   public blogId: string = '';
@@ -21,6 +21,8 @@ export class BlogComponent implements OnInit {
     password: '',
     token: ''
   };
+
+  public views:number = 0;
 
 
   constructor(private http: HttpClient, route: ActivatedRoute, private router: Router) {
@@ -37,6 +39,8 @@ export class BlogComponent implements OnInit {
       if(!this.blog) {
         alert("No blog found")
       } else {
+        this.views = this.blog.views;
+
         this.http.get<any>(`http://localhost:5000/account/user/${this.blog.author}`)
         .subscribe(res => {
           this.account = res;
@@ -50,6 +54,19 @@ export class BlogComponent implements OnInit {
       }
     }, err => {
       console.log(err);
+    })
+  }
+
+  ngOnDestroy(): void {
+    const body = {
+      views: this.views + 1,
+    }
+
+    this.http.patch(`http://localhost:5000/blog/${this.blogId}`, body)
+    .subscribe(res => {
+    }, err => {
+      console.log(err);
+      alert(err)
     })
   }
 
