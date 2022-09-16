@@ -1,5 +1,5 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-300">
-    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/2 h-full" method="post" [formGroup]="blogForm" (ngSubmit)="post()">
+    <!-- <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/2 h-full" method="post" [formGroup]="blogForm" (ngSubmit)="post()">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
           Title
@@ -68,5 +68,6 @@
               </button>
         </a>
       </div>
-    </form>
-  </div>
+    </form> -->
+    <ckeditor [editor]="editor" [config]="ckeConfig" data="<p>Hello, world!</p>"></ckeditor>
+</div>

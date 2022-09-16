@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-create-blog',
@@ -10,10 +11,19 @@ import { Router } from '@angular/router';
 })
 export class CreateBlogComponent implements OnInit {
 
+  public editor = ClassicEditorBuild;
+
   public blogForm !: FormGroup;
   public file !: File;
   public imageSrc !: string;
-  
+
+  public ckeConfig = {
+    ckfinder: {
+      options: {
+          resourceType: 'Images'
+      },
+    },
+  };
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) { 
     this.blogForm = this.formBuilder.group({
