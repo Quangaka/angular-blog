@@ -22,6 +22,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     token: ''
   };
 
+  public idAccountLocal!: string | null;
   public views:number = 0;
 
 
@@ -29,6 +30,8 @@ export class BlogComponent implements OnInit, OnDestroy {
     route.params.subscribe((params) => {
       this.blogId = params["id"];
     });
+
+    this.idAccountLocal = localStorage.getItem('id')
    }
 
   ngOnInit(): void {
@@ -40,6 +43,8 @@ export class BlogComponent implements OnInit, OnDestroy {
         alert("No blog found")
       } else {
         this.views = this.blog.views;
+
+        console.log(this.blog.body)
 
         this.http.get<any>(`http://localhost:5000/account/user/${this.blog.author}`)
         .subscribe(res => {
@@ -80,9 +85,4 @@ export class BlogComponent implements OnInit, OnDestroy {
       console.log(err);
     })
   }  
-
-  edit() {
-    this.router.navigate(['edit-blog'])
-  }
-
 }

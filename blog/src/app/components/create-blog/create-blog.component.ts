@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor4 } from 'ckeditor4-angular/ckeditor'
 
 @Component({
   selector: 'app-create-blog',
@@ -11,29 +11,37 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 })
 export class CreateBlogComponent implements OnInit {
 
-  public editor = ClassicEditorBuild;
-
   public blogForm !: FormGroup;
+
   public file !: File;
   public imageSrc !: string;
 
-  public ckeConfig = {
-    ckfinder: {
-      options: {
-          resourceType: 'Images'
-      },
+  public idAccountLocal: string | null ='';
+
+  public ckeModel = {
+    ckeConfig: {
+      extraPlugins: 'uploadimage',
+      uploadUrl:      'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+      // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+      filebrowserBrowseUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/ckfinder.html',
+      filebrowserImageBrowseUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
+      filebrowserUploadUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
+      filebrowserImageUploadUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images'
     },
-  };
+    data: '<p>Insert body here</p>'
+  }
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) { 
     this.blogForm = this.formBuilder.group({
       title: [''],
       topic: [''],
       description: [''],
-      image: [''],
-      body: [''],
+      imageSrc: [''],
       published: [''],
     })
+
+    this.idAccountLocal = localStorage.getItem('id')
   }
 
   ngOnInit(): void {
@@ -47,7 +55,7 @@ export class CreateBlogComponent implements OnInit {
       topic: this.blogForm.value.topic,
       description: this.blogForm.value.description,
       imageSrc: this.imageSrc,
-      body: this.blogForm.value.body,
+      body: this.ckeModel.data,
       status: this.blogForm.value.published
     }
 
@@ -70,12 +78,12 @@ export class CreateBlogComponent implements OnInit {
     })
   }
 
+  public onChange( event: CKEditor4.EventInfo ) {
+    this.ckeModel.data = event.editor.getData()
+  }
+
   async  processFile(imageInput: any) {
     this.file = imageInput.files[0];
-    // console.log(this.file)
-    // reader.readAsDataURL(this.file);
-    // console.log(reader)
-    // console.log(reader.result)
     const temp = await this.toBase64(this.file);
 
     if(temp) {
@@ -89,5 +97,4 @@ export class CreateBlogComponent implements OnInit {
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
-
 }

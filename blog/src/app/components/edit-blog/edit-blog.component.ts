@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CKEditor4 } from 'ckeditor4-angular';
 import { Blog } from 'src/app/models/blog.model';
 
 @Component({
@@ -16,6 +17,20 @@ export class EditBlogComponent implements OnInit {
   public blogId: string = '';
   public file !: File;
   public imageSrc !: string;
+
+  public ckeModel = {
+    ckeConfig: {
+      extraPlugins: 'uploadimage',
+      uploadUrl:      'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+      // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+      filebrowserBrowseUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/ckfinder.html',
+      filebrowserImageBrowseUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
+      filebrowserUploadUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
+      filebrowserImageUploadUrl:'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images'
+    },
+    data: '<p>Insert body here</p>'
+  }
   
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private route: ActivatedRoute) { 
@@ -34,14 +49,9 @@ export class EditBlogComponent implements OnInit {
           topic: [this.blog.topic],
           description: [this.blog.description],
           imageSrc: [this.blog.imageSrc],
-          body: [this.blog.body],
           published: [this.blog.status.toString()],
         })
-        // this.blogForm.value.title = this.blog.title;
-        // this.blogForm.value.topic = this.blog.topic;
-        // this.blogForm.value.description = this.blog.description;
-        // this.blogForm.value.imageSrc = this.blog.imageSrc;
-        // this.blogForm.value.body = this.blog.body;
+        this.ckeModel.data = this.blog.body;
       }
     }, err => {
       console.log(err);
@@ -58,7 +68,7 @@ export class EditBlogComponent implements OnInit {
       topic: this.blogForm.value.topic,
       description: this.blogForm.value.description,
       imageSrc: this.imageSrc,
-      body: this.blogForm.value.body,
+      body: this.ckeModel.data,
       status: this.blogForm.value.published,
     }
 
@@ -75,10 +85,6 @@ export class EditBlogComponent implements OnInit {
 
   async  processFile(imageInput: any) {
     this.file = imageInput.files[0];
-    // console.log(this.file)
-    // reader.readAsDataURL(this.file);
-    // console.log(reader)
-    // console.log(reader.result)
     const temp = await this.toBase64(this.file);
 
     if(temp) {
@@ -93,4 +99,7 @@ export class EditBlogComponent implements OnInit {
     reader.onerror = error => reject(error);
   });
 
+  public onChange( event: CKEditor4.EventInfo ) {
+    this.ckeModel.data = event.editor.getData()
+  }
 }
