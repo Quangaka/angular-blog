@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CKEditor4 } from 'ckeditor4-angular/ckeditor'
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-blog',
@@ -32,7 +33,7 @@ export class CreateBlogComponent implements OnInit {
     data: '<p>Insert body here</p>'
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) { 
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, public userService: UserService) { 
     this.blogForm = this.formBuilder.group({
       title: [''],
       topic: [''],

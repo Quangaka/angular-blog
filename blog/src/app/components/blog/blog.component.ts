@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Blog } from 'src/app/models/blog.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from 'src/app/models/account.model';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   public views:number = 0;
 
 
-  constructor(private http: HttpClient, route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, route: ActivatedRoute, private router: Router, public userService: UserService) {
     route.params.subscribe((params) => {
       this.blogId = params["id"];
     });
@@ -43,8 +44,6 @@ export class BlogComponent implements OnInit, OnDestroy {
         alert("No blog found")
       } else {
         this.views = this.blog.views;
-
-        console.log(this.blog.body)
 
         this.http.get<any>(`http://localhost:5000/account/user/${this.blog.author}`)
         .subscribe(res => {

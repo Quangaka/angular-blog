@@ -1,4 +1,8 @@
-
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+</head>
+<body>
   <div class="container px-8 py-5 lg:py-8 mx-auto xl:px-5 max-w-screen-lg">
     <nav>
         <div class="flex flex-wrap justify-between md:gap-10 md:flex-nowrap">
@@ -12,6 +16,19 @@
                 <a routerLink="/create-blog" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">
                     Create Blog
                 </a>
+                <div class="dropdown">
+                  <button class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">Topic
+                  </button>
+                  <div class="dropdown-content">
+                    <a routerLink="/topic-it" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">IT</a>
+                    <a routerLink="/topic-life" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">LIFE</a>
+                  </div>
+                </div>
+            </div>
+            <div class="flex-col items-center justify-end order-2 hidden w-full md:flex md:flex-row md:w-auto md:flex-1 md:order-none">
+              <a routerLink="/login" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-red-500 cursor-pointer link-effect" (click)="userService.logOut()">
+                  Sign Out
+              </a>
             </div>
         </div>
     </nav>
@@ -62,3 +79,4 @@
         </div>
       </article>
     </div>
+</body>

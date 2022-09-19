@@ -15,6 +15,8 @@ import { BlogComponent } from './components/blog/blog.component';
 import { AccountComponent } from './components/account/account.component';
 import { CreateBlogComponent } from './components/create-blog/create-blog.component';
 import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
+import { TopicLifeComponent } from './components/topic-life/topic-life.component';
+import { TopicITComponent } from './components/topic-it/topic-it.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
     AccountComponent,
     CreateBlogComponent,
     EditBlogComponent,
+    TopicLifeComponent,
+    TopicITComponent,
   ],
   imports: [
     BrowserModule,

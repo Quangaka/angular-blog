@@ -11,12 +11,24 @@
               <a routerLink="/create-blog" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">
                   Create Blog
               </a>
+              <div class="dropdown">
+                <button class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">Topic
+                </button>
+                <div class="dropdown-content">
+                  <a routerLink="/topic-it" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">IT</a>
+                  <a routerLink="/topic-life" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 cursor-pointer link-effect">LIFE</a>
+                </div>
+              </div>
+
+          </div>
+          <div class="flex-col items-center justify-end order-2 hidden w-full md:flex md:flex-row md:w-auto md:flex-1 md:order-none">
+            <a routerLink="/login" class="px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-400 hover:text-red-500 cursor-pointer link-effect" (click)="userService.logOut()">
+                Sign Out
+            </a>
           </div>
       </div>
   </nav>
 </div>
 <div class="container px-8 py-5 lg:py-8 mx-auto xl:px-5 max-w-screen-lg">
-  <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
     <app-blog-list></app-blog-list>
-  </div>
 </div>

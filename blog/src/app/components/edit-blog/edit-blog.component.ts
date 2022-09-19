@@ -17,6 +17,7 @@ export class EditBlogComponent implements OnInit {
   public blogId: string = '';
   public file !: File;
   public imageSrc !: string;
+  public publishedAt !: Date;
 
   public ckeModel = {
     ckeConfig: {
@@ -52,6 +53,8 @@ export class EditBlogComponent implements OnInit {
           published: [this.blog.status.toString()],
         })
         this.ckeModel.data = this.blog.body;
+        this.imageSrc = this.blog.imageSrc;
+        this.publishedAt = this.blog.publishedAt;
       }
     }, err => {
       console.log(err);
@@ -63,6 +66,10 @@ export class EditBlogComponent implements OnInit {
   }
 
   patch() {
+    console.log(this.blogForm.value.published)
+    if(this.blogForm.value.published === true) {
+      this.publishedAt = new Date();
+    }
     const body = {
       title: this.blogForm.value.title,
       topic: this.blogForm.value.topic,
@@ -70,9 +77,9 @@ export class EditBlogComponent implements OnInit {
       imageSrc: this.imageSrc,
       body: this.ckeModel.data,
       status: this.blogForm.value.published,
+      publishedAt: this.publishedAt
     }
 
-    console.log(body.status)
     this.http.patch(`http://localhost:5000/blog/${this.blogId}`, body)
     .subscribe(res => {
       alert("Edit blog Successfully")
